@@ -1,0 +1,19 @@
+body {
+  background-color: #F9F7F7;
+}
+
+.centered {
+    padding-top: 200px;
+    text-align: center;
+}
+
+.secret-text {
+  text-align: center;
+  font-size: 2rem;
+  color: #fff;
+  background-color: #000;
+}
+
+.submit-button {
+  margin-top: 20px;
+}
