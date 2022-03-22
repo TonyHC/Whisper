@@ -30,7 +30,8 @@ mongoose.connect("mongodb://localhost:27017/userDB");
 const userSchema = new mongoose.Schema({
     email: String,
     password: String,
-    googleId: String
+    googleId: String,
+    secret: String
 });
 
 userSchema.plugin(passportLocalMongoose);
@@ -89,8 +90,20 @@ app.get("/register", function(req, res) {
 });
 
 app.get("/secrets", function(req, res) {
+    User.find({"secret": {$ne: null}}, function(error, foundSecrets) {
+        if (error) {
+            console.log(error);
+        } else {
+            res.render("secrets", {
+                usersWithSecrets: foundSecrets
+            });
+        }
+    });
+});
+
+app.get("/submit", function(req, res) {
     if (req.isAuthenticated()) {
-        res.render("secrets");
+        res.render("submit");
     } else {
         res.render("login");
     }
@@ -129,6 +142,21 @@ app.post("/login", function(req, res) {
             })
         }
     });
+});
+
+app.post("/submit", function(req, res) {
+    const submittedSecret = req.body.secret;
+
+    User.findById(req.user._id, function(error, foundUser) {
+        if (error) {
+            console.log(error);
+        } else {
+            foundUser.secret = submittedSecret;
+            foundUser.save();
+
+            res.redirect("/secrets");
+        }
+    })
 });
 
 app.listen(3000, function() {
