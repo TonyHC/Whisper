@@ -17,3 +17,15 @@ body {
 .submit-button {
   margin-top: 20px;
 }
+
+.card-social {
+  width: 15rem;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  .card-social {
+    width: auto;
+    text-align: left;
+  }
+}
