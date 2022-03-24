@@ -1,31 +1,95 @@
+a {
+  text-decoration: none;
+}
+
 body {
-  background-color: #F9F7F7;
+  background-color: #f5f5f5;
+}
+
+.active {
+  font-weight: bold;
+}
+
+.btn-outline-light {
+  margin-left: 15px;
 }
 
 .centered {
-    padding-top: 200px;
-    text-align: center;
+  padding-top: 200px;
+  text-align: center;
+}
+
+.login-form {
+  display: flex;
+  align-items: center;
+  padding-top: 100px;
+  padding-bottom: 40px;
+  background-color: #f5f5f5;
+}
+
+.flex-wrapper {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 30px;
+  margin: auto;
+}
+
+.form-signin .checkbox {
+  font-weight: 400;
+}
+
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+.form-signin input[type="email"] {
+  margin-bottom: -1px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+.btn-google, .btn-submit, .sign-up-text {
+  margin-top: 25px;
+}
+
+.secrets-centered {
+  padding-top: 125px;
+  text-align: center;
 }
 
 .secret-text {
-  text-align: center;
-  font-size: 2rem;
-  color: #fff;
-  background-color: #000;
+  font-family: 'EB Garamond', serif;
+  font-size: 1.2rem;
+  font-weight: 500;
 }
 
-.submit-button {
-  margin-top: 20px;
+.sign-in {
+  margin: 5px auto;
 }
 
-.card-social {
-  width: 15rem;
-  text-align: center;
+.sign-up {
+  margin: 15px auto 5px auto;
 }
 
-@media (max-width: 768px) {
-  .card-social {
-    width: auto;
-    text-align: left;
+.submit-input {
+  width: 40%;
+}
+
+@media (max-width: 992px) {
+  .btn-outline-light {
+    margin-left: 0;
   }
 }
