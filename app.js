@@ -25,7 +25,8 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-mongoose.connect("mongodb://localhost:27017/userDB");
+// Connect to Mongodb Atlas
+mongoose.connect("mongodb+srv://admin-tony:" + process.env.MONGODB_ATLAS_KEY  + "@projectcluster.wd2lj.mongodb.net/userDB");
 
 const userSchema = new mongoose.Schema({
     email: String,
@@ -54,9 +55,9 @@ passport.deserializeUser(function(id, done) {
 });
 
 passport.use(new GoogleStrategy({
-    clientID: process.env.CLIENT_ID,
-    clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/secrets",
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOLGE_CLIENT_SECRET,
+    callbackURL: "https://infinite-spire-84380.herokuapp.com/auth/google/secrets",
     userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo" 
   },
   function(accessToken, refreshToken, profile, cb) {
@@ -67,7 +68,9 @@ passport.use(new GoogleStrategy({
 ));
 
 app.get("/", function(req, res) {
-    res.render("home");
+    res.render("home", {
+        isAuthenticated: req.isAuthenticated()
+    });
 });
 
 app.get("/auth/google",
@@ -95,7 +98,8 @@ app.get("/secrets", function(req, res) {
             console.log(error);
         } else {
             res.render("secrets", {
-                usersWithSecrets: foundSecrets
+                usersWithSecrets: foundSecrets,
+                isAuthenticated: req.isAuthenticated()
             });
         }
     });
@@ -103,7 +107,9 @@ app.get("/secrets", function(req, res) {
 
 app.get("/submit", function(req, res) {
     if (req.isAuthenticated()) {
-        res.render("submit");
+        res.render("submit", {
+            isAuthenticated: req.isAuthenticated()
+        });
     } else {
         res.render("login");
     }
@@ -159,6 +165,12 @@ app.post("/submit", function(req, res) {
     })
 });
 
-app.listen(3000, function() {
-    console.log("Server is running on port 3000.");
+// Let Heroku chose the port when loading the deployed web app or chose port 3000 when testing locally
+let port = process.env.PORT;
+if (port == null || port == "") {
+    port = 3000;
+}
+
+app.listen(port, function () {
+    console.log("Server has start successfully.");
 });
